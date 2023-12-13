@@ -2,7 +2,7 @@ from flask import Flask, render_template
 
 from app.extensions import db, migrate
 from config import Config
-from app.user import models
+from app import user, public, post
 
 def create_app(config_class=Config):
     app = Flask(__name__)
@@ -10,11 +10,7 @@ def create_app(config_class=Config):
 
     register_extensions(app)
 
-    # Register blueprints here
-
-    @app.route('/')
-    def test_page():
-        return render_template('home.html')
+    register_blueprints(app)
 
     return app
 
@@ -22,3 +18,9 @@ def create_app(config_class=Config):
 def register_extensions(app):
     db.init_app(app)
     migrate.init_app(app, db)
+
+
+def register_blueprints(app):
+    app.register_blueprint(user.views.blueprint)
+    app.register_blueprint(public.views.blueprint)
+    app.register_blueprint(post.views.blueprint)
