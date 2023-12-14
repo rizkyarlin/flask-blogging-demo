@@ -10,3 +10,4 @@ class User(UserMixin, db.Model):
     id: Mapped[int] = mapped_column(Integer, primary_key=True)
     username: Mapped[str] = mapped_column(String(50), unique=True)
     password: Mapped[str]
+    posts: Mapped[List["Post"]] = relationship(back_populates="user")
