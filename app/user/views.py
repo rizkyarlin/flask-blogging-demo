@@ -19,7 +19,7 @@ def register():
 
         user = User()
         user.username = request.form.get("username")
-        user.password = bcrypt.generate_password_hash(request.form.get("password"))
+        user.password = bcrypt.generate_password_hash(request.form.get("password")).decode("utf-8")
         db.session.add(user)
         db.session.commit()
         return redirect(url_for('user.login'))
